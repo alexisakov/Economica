@@ -58,12 +58,19 @@ SetOptions[TimelinePlot, ImageSize -> {24, 18}/1.5 cm, AspectRatio -> 3/4,
 SetOptions[PieChart, ImageSize -> {24, 18}/1.5 cm, AspectRatio -> 3/4,
   ChartStyle ->(ColorData["Rainbow"]/@Range[10]), ChartLayout->"Stacked",
   TicksStyle -> Directive[22/1.5, FontName -> "Arial" , Black]];
-
 SetOptions[BoxWhiskerChart, ImageSize -> {24, 18}/1.5 cm, AspectRatio -> 3/4,
   ChartStyle ->(ColorData["Rainbow"]/@Range[10]), 
   TicksStyle -> Directive[22/1.5, FontName -> "Arial" , Black, Opacity[0.3], FontOpacity -> 1],
    FrameTicksStyle -> Directive[22/1.5, FontName -> "Arial" , Black]];
 
+SetOptions[BubbleChart, ImageSize -> {24, 18}/1.5 cm, AspectRatio -> 3/4,
+  ChartStyle ->(ColorData["Rainbow"]/@Range[10]), 
+  TicksStyle -> Directive[22/1.5, FontName -> "Arial" , Black, Opacity[0.3], FontOpacity -> 1],
+   FrameTicksStyle -> Directive[22/1.5, FontName -> "Arial" , Black]];
+
+   
+   
+   
 
 
 Begin["`Private`"] (* Begin Private Context *) 
