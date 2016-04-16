@@ -26,6 +26,7 @@ Get["MakeLegend`",Path -> {FileNameJoin[{DirectoryName[$InputFileName],"TimeSeri
 
 
 Get["GrangerTest`",Path -> {FileNameJoin[{DirectoryName[$InputFileName],"TimeSeries"}]}];
+Get["TimeSeriesJoin`",Path -> {FileNameJoin[{DirectoryName[$InputFileName],"TimeSeries"}]}];
 Get["TimeSeriesMinMax`",Path -> {FileNameJoin[{DirectoryName[$InputFileName],"TimeSeries"}]}];
 Get["VARinit`",Path -> {FileNameJoin[{DirectoryName[$InputFileName],"TimeSeries","VAR"}]}];
 Get["TVARinit`",Path -> {FileNameJoin[{DirectoryName[$InputFileName],"TimeSeries","TVAR"}]}];
