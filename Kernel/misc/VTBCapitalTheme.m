@@ -71,8 +71,14 @@ SetOptions[PairedHistogram, ImageSize -> {24, 18}/1.5 cm, AspectRatio -> 3/4,
   TicksStyle -> Directive[22/1.5, FontName -> "Arial", Black, Opacity[0.3], FontOpacity -> 1],
   AxesStyle -> Directive[FontFamily -> "Arial", FontSize -> 22/1.5]
   ];
+SetOptions[MatrixPlot, ImageSize -> {24, 18}/1.5 cm, AspectRatio -> 3/4, 
+  TicksStyle -> Directive[22/1.5, FontName -> "Arial" , Black],
+  FrameTicksStyle -> Directive[22/1.5, FontName -> "Arial" , Black]];
 
-   
+
+SetOptions[RadarChart`RadarChart, ImageSize -> {24, 18}/1.5 cm, AspectRatio -> 3/4,
+  PlotStyle ->(ColorData["Rainbow"]/@Range[10]), AxesType -> "Star",
+  TicksStyle -> Directive[22/1.5, FontName -> "Arial" , Black, Opacity[0.3], FontOpacity -> 1]];
    
    
 
