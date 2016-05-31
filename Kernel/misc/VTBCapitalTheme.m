@@ -41,7 +41,7 @@ cm = 72/2.54;
 
 
 SetOptions[BarChart, ImageSize -> {24, 18}/1.5 cm, AspectRatio -> 3/4,
-  ChartStyle ->(ColorData["Rainbow"]/@Range[10]), ChartLayout->"Stacked",
+  ChartStyle ->(Directive[EdgeForm[None],ColorData["Rainbow"]@#]&/@Range[10]), ChartLayout->"Stacked",
   TicksStyle -> Directive[22/1.5, FontName -> "Arial" , Black, Opacity[0.3], FontOpacity -> 1]];
   
 SetOptions[DateListPlot, ImageSize -> {24, 18}/1.5 cm, AspectRatio -> 3/4,
