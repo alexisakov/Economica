@@ -15,9 +15,13 @@ legend = Grid[
   
   
   
-  Export[FileNameJoin[{exportDirectory, "pic.pdf"}], %]*)
+Export[FileNameJoin[{exportDirectory, "pic.pdf"}], %]*)
+
+
+Options[MakeLegend]={BaseStyle -> Directive[FontFamily -> "Arial", FontSize -> 22/1.5],FontSize->22/1.5};
+
   
-MakeLegend[list_] := Module[
+MakeLegend[list_,OptionsPattern[]] := Module[
   {icons, text, legend},
   icons = MapIndexed[
     Graphics[{PointSize[Large],Thickness[0.009],ColorData["Rainbow", First@#2],
@@ -26,11 +30,11 @@ MakeLegend[list_] := Module[
         #1=="Dot", Point[{0, 0}]
         ]
        }, ImageSize -> 16] &, list[[All, 2]]];
-  text = VTBTextStyle /@ list[[All, 1]];
+  text = VTBTextStyle[#,FontSize->OptionValue[FontSize]]& /@ list[[All, 1]];
   
   legend = {icons, text}\[Transpose];
   Grid[legend, Alignment -> {{Right, Left}, Center}, 
-   BaseStyle -> Directive[FontFamily -> "Arial", FontSize -> 22/1.5], 
+   BaseStyle -> OptionValue[BaseStyle], 
    Spacings -> {{0, 0.5, 2}, 0}]
 ]
   
