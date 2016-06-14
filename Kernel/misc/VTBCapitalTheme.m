@@ -11,7 +11,10 @@ VTPurple::usage="";*)
 VTBViolet = RGBColor[0.86328125`, 0.6484375`, 0.796875`];
 VTBBlue = RGBColor[0.15625`, 0.43359375`, 0.69140625`];
 VTBLightBlue = RGBColor[0.39453125`, 0.66015625`, 0.99609375`];
-VTBTextStyle[x_] := Style[x, FontFamily -> "Arial", FontSize -> 22/1.5, Black, LineSpacing -> {0.1, 10}];
+
+Options[VTBTextStyle]={FontSize -> 22/1.5}
+
+VTBTextStyle[x_,OptionsPattern[]] := Style[x, FontFamily -> "Arial", FontSize -> OptionValue[FontSize], Black, LineSpacing -> {0.1, 10}];
 VTBTextStyleNoColor[x_] := Style[x, FontFamily -> "Arial", FontSize -> 22/1.5,  LineSpacing -> {0.1, 10}];
 
 
