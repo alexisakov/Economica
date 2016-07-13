@@ -17,7 +17,7 @@ You can start using it, e.g. by calling
     
 ## Updating
 
-To update again using the ProgectInstall[] package:
+To update again using the ProjectInstall[] package:
 
     Needs["ProjectInstaller`"]
     ProjectUninstall["Economica"]
