@@ -13,8 +13,7 @@ Begin["`Private`"] (* Begin Private Context *)
 
 MonthShift[timeSeries_, months_] := 
  Module[{ts = timeSeries}, 
-  ts[[2, 2, 1, 1]] = (DatePlus[#1, {months, "Month"}] &) /@ 
-    ts[[2, 2, 1, 1]]; ts];
+  ts[[2, 2, 1, 1]] = (DatePlus[#1, {months, "Month"}] &) /@ ts[[2, 2, 1, 1]]; ts];
 
 TimeSeriesMonthShift[timeSeries_, months_] := Module[
  		{ 	dates = timeSeries["Dates"], vals = timeSeries["Values"]}, 
