@@ -30,7 +30,10 @@ Unprotect[ColorData];
     	Transpose[ 
     		{Range[9],  
  		 
- 		RGBColor/@({{55,126,184},{247,129,191},{228,26,28},{153,153,153},{77,175,74},{152,78,163},{255,127,0},{255,255,51},{166,86,40}}/255.) 
+ 		RGBColor/@({
+			{55,126,184},{247,129,191},{228,26,28},{153,153,153},
+			{74, 117, 43},
+			{152,78,163},{255,127,0},{255,255,51},{166,86,40}}/255.) 
     		}], 
       x]]; 
  	  
@@ -63,6 +66,10 @@ cm = 72/2.54;
 
 
 SetOptions[BarChart, ImageSize -> {24, 18}/1.5 cm, AspectRatio -> 3/4,
+  ChartStyle ->(ColorData["Rainbow"]/@Range[10]), ChartLayout->"Stacked",
+  TicksStyle -> Directive[22/1.5, FontName -> "Arial" , Black, Opacity[0.3], FontOpacity -> 1]];
+
+SetOptions[Histogram, ImageSize -> {24, 18}/1.5 cm, AspectRatio -> 3/4,
   ChartStyle ->(ColorData["Rainbow"]/@Range[10]), ChartLayout->"Stacked",
   TicksStyle -> Directive[22/1.5, FontName -> "Arial" , Black, Opacity[0.3], FontOpacity -> 1]];
   
