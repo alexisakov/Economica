@@ -18,46 +18,15 @@ VTBTextStyle[x_,OptionsPattern[]] := Style[x, FontFamily -> "Arial", FontSize ->
 VTBTextStyleNoColor[x_] := Style[x, FontFamily -> "Arial", FontSize -> 22/1.5,  LineSpacing -> {0.1, 10}];
 
 
-{{0.0392156862745098, 0.1607843137254902, 0.45098039215686275`}, {1., 1., 1.}, {0.4549019607843137, 0.1450980392156863, 0.34901960784313724`}, {0.4549019607843137, 0.1450980392156863, 0.34901960784313724`}}
 
 Unprotect[ColorData]; 
- (*http://colorbrewer2.org  
- http://colorbrewer2.org/?type=sequential&scheme=RdPu&n=6 
- *) 
- ColorData["Rainbow"] =  
+ (*http://colorbrewer2.org  http://colorbrewer2.org/?type=sequential&scheme=RdPu&n=6 *) 
+ColorData["Rainbow"] =  
    Function[x,  
-    Blend[ 
-    	Transpose[ 
-    		{Range[9],  
- 		 
- 		RGBColor/@({
-			{55,126,184},{247,129,191},{228,26,28},{153,153,153},
-			{74, 117, 43},
-			{152,78,163},{255,127,0},{255,255,51},{166,86,40}}/255.) 
-    		}], 
-      x]]; 
- 	  
- 	 (*	{VTBViolet, 		RGBColor[{0.08984375, 0.21484375, 0.3671875}],			RGBColor[{0.65625, 0.65625, 0.65625}], 			RGBColor[{0.58203125, 0.21484375, 0.20703125}], 
- 			RGBColor[{0.33203125, 0.5546875, 0.83203125}], 			RGBColor[{0.84765625, 0.5859375, 0.578125}], 			 
-    			VTBBlue,    			RGBColor[{0.6588235294117647, 0.6588235294117647,0.6588235294117647}],    			RGBColor[{0.4549019607843137,  0.1450980392156863, 0.34901960784313724`}], 
-    			RGBColor[{0.0392156862745098, 0.1607843137254902, 0.45098039215686275`}],    			RGBColor[{0.396078431372549, 0.6627450980392157, 1.}],  
-    			RGBColor[{0.6509803921568628, 0.24705882352941178`, 0.5254901960784314}],   VTBLightBlue, Gray, Darker@Gray, 
-    			VTBBlue, VTBViolet}*) 
- 	  
- 	  
- Protect[ColorData] 
-
-
-
-
-
-
-
-
-
-
-
-
+    Blend[Transpose[{Range[9], 	 
+ 		(RGBColor/@({{55,126,184},{247,129,191},{228,26,28},{153,153,153},{74, 117, 43},{152,78,163},{255,127,0},{255,255,51},{166,86,40}}/255.))}], 
+      Mod[x,9,1]]];  	  
+Protect[ColorData] 
 
 
 
@@ -74,9 +43,11 @@ SetOptions[Histogram, ImageSize -> {24, 18}/1.5 cm, AspectRatio -> 3/4,
   TicksStyle -> Directive[22/1.5, FontName -> "Arial" , Black, Opacity[0.3], FontOpacity -> 1]];
   
 SetOptions[DateListPlot, ImageSize -> {24, 18}/1.5 cm, AspectRatio -> 3/4, 
-   Axes -> True, Frame -> False, PlotStyle ->(ColorData["Rainbow"]/@Range[12]),  
+   Axes -> True, Frame -> False,   
    TicksStyle -> Directive[22/1.5, FontName -> "Arial" , Black], 
-   FrameTicksStyle -> Directive[22/1.5, FontName -> "Arial" , Black]]; 
+   FrameTicksStyle -> Directive[22/1.5, FontName -> "Arial" , Black],
+   PlotStyle->(ColorData["Rainbow"]/@Range[10])   
+   ]; 
 
  SetOptions[ListPlot, ImageSize -> {24, 18}/1.5 cm, AspectRatio -> 3/4,  
    TicksStyle -> Directive[22/1.5, FontName -> "Arial" , Black], PlotStyle ->(ColorData["Rainbow"]/@Range[10])]; 
