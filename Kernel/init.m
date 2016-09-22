@@ -16,6 +16,9 @@ Get["NatLanInit`",Path -> {FileNameJoin[{DirectoryName[$InputFileName],"NaturalL
 Get["TransformTimeSeries`",Path -> {FileNameJoin[{DirectoryName[$InputFileName],"TimeSeries"}]}];
 Get["TimeSeriesFillMissing`",Path -> {FileNameJoin[{DirectoryName[$InputFileName],"TimeSeries"}]}];
 Get["HPFilter`",Path -> {FileNameJoin[{DirectoryName[$InputFileName],"TimeSeries"}]}];
+Get["TimeSeriesPureF`",Path -> {FileNameJoin[{DirectoryName[$InputFileName],"TimeSeries"}]}];
+
+
 
 Get["TernaryPlot`",Path -> {FileNameJoin[{DirectoryName[$InputFileName],"TimeSeries","TimeSeriesCharts"}]}];
 Get["ShadedDateListPlot`",Path -> {FileNameJoin[{DirectoryName[$InputFileName],"TimeSeries","TimeSeriesCharts"}]}];
