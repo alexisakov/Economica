@@ -1,14 +1,14 @@
 (* ::Package:: *)
 
 (*Wolfram Language package*) 
-Options[DateListPlotSnipped] =  Options[DateListPlot];
+Options[SnippedDateListPlot] =  Options[DateListPlot];
 
 Off[NumberForm::sigz];
 
 
   With[{opt = First /@ Options[DateListPlot]},
 
-DateListPlotSnipped[l_,range1_,range2_, OptionsPattern[]]:= Module[
+SnippedDateListPlot[l_,range1_,range2_, OptionsPattern[]]:= Module[
 	{ytick1, ytick2,  target,jn},
 	
 	ytick1 = FindDivisions[range1, 5] /. y_?NumericQ :> {y, y} /. {y_?NumericQ, _} /; y >= range1[[2]] :> Sequence[];
