@@ -22,6 +22,7 @@ Get["TimeSeriesPureF`",Path -> {FileNameJoin[{DirectoryName[$InputFileName],"Tim
 
 Get["TernaryPlot`",Path -> {FileNameJoin[{DirectoryName[$InputFileName],"TimeSeries","TimeSeriesCharts"}]}];
 Get["ShadedDateListPlot`",Path -> {FileNameJoin[{DirectoryName[$InputFileName],"TimeSeries","TimeSeriesCharts"}]}];
+Get["SnippedDateListPlot`",Path -> {FileNameJoin[{DirectoryName[$InputFileName],"TimeSeries","TimeSeriesCharts"}]}];
 Get["FanChart`",Path -> {FileNameJoin[{DirectoryName[$InputFileName],"TimeSeries","TimeSeriesCharts"}]}];
 Get["TimeSeriesBarChart`",Path -> {FileNameJoin[{DirectoryName[$InputFileName],"TimeSeries","TimeSeriesCharts"}]}];
 Get["TwoAxisDateListPlot`",Path -> {FileNameJoin[{DirectoryName[$InputFileName],"TimeSeries","TimeSeriesCharts"}]}];
