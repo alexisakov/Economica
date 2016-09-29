@@ -81,6 +81,7 @@ SetOptions[RadarChart`RadarChart, ImageSize -> {24, 18}/1.5 cm, AspectRatio -> 3
    PlotStyle ->(ColorData["Rainbow"]/@Range[10]), AxesType -> "Star", 
    TicksStyle -> Directive[22/1.5, FontName -> "Arial" , Black, Opacity[0.3], FontOpacity -> 1]]; 
 
+SetOptions[Callout, Background -> Opacity[0.0]]
 
    
    
