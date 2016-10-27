@@ -17,7 +17,7 @@ Get["TransformTimeSeries`",Path -> {FileNameJoin[{DirectoryName[$InputFileName],
 Get["TimeSeriesFillMissing`",Path -> {FileNameJoin[{DirectoryName[$InputFileName],"TimeSeries"}]}];
 Get["HPFilter`",Path -> {FileNameJoin[{DirectoryName[$InputFileName],"TimeSeries"}]}];
 Get["TimeSeriesPureF`",Path -> {FileNameJoin[{DirectoryName[$InputFileName],"TimeSeries"}]}];
-
+Get["TimeSeriesStartOfMonthShift`",Path -> {FileNameJoin[{DirectoryName[$InputFileName],"TimeSeries"}]}];
 
 
 Get["TernaryPlot`",Path -> {FileNameJoin[{DirectoryName[$InputFileName],"TimeSeries","TimeSeriesCharts"}]}];
