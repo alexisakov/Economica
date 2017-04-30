@@ -38,14 +38,10 @@ GetRussianData["ElectricityConsumption", {t1_, t2_}] /;
   DateDifference[t1, t2] > Quantity[30, "Days"] && 
    AbsoluteTime@t1 < AbsoluteTime@t2 := Module[
   {ranges},
-  ranges = {First@#, Last@#} & /@ 
-    Partition[DateRange[t1, DatePlus[t2, {1, "Day"}]], 30, 30, 1, {}];
-  Union@Flatten[
-    GetRussianData["ElectricityConsumption", #] & /@ ranges, 1]
+  ranges = {First@#, Last@#} & /@ Partition[DateRange[t1, DatePlus[t2, {1, "Day"}]], 30, 30, 1, {}];
+  Union@Flatten[ GetRussianData["ElectricityConsumption", #] & /@ ranges, 1]
   
-  (*;
-  Union@(Join@@((GetRussianData["ElectricityConsumption",
-  Sequence@@#]&)/@ranges))*)
+  (*;  Union@(Join@@((GetRussianData["ElectricityConsumption",  Sequence@@#]&)/@ranges))*)
   ]
   
   GetRussianData["ElectricityConsumption", {t1_, t2_}] /; 
@@ -53,9 +49,9 @@ GetRussianData["ElectricityConsumption", {t1_, t2_}] /;
    AbsoluteTime@t1 < AbsoluteTime@t2 := Module[
   {rawEnergy, cleanEnergy},
   rawEnergy = 
-   Import["http://www.so-ups.ru/index.php?id=ees_gen_consump_day&no_\
-cache=1&tx_ms1cdu_pi1[kpo]=1019&tx_ms1cdu_pi1[dt]=" <> 
-     DateString[t2, {"Day", ".", "Month", ".", "Year"}] <> 
+   Import[
+   "http://www.so-ups.ru/index.php?id=ees_gen_consump_day&no_\cache=1&tx_ms1cdu_pi1[kpo]=1019&tx_ms1cdu_pi1[dt]=" <> 
+     DateString[DatePlus[t2, {1, "Day"}], {"Day", ".", "Month", ".", "Year"}] <> 
      "&tx_ms1cdu_pi1[format]=xml", "XML"];
   cleanEnergy = Cases[rawEnergy,
     XMLElement[
@@ -74,8 +70,7 @@ cache=1&tx_ms1cdu_pi1[kpo]=1019&tx_ms1cdu_pi1[dt]=" <>
   DateDifference[t1, t2] > Quantity[30, "Days"] && 
    AbsoluteTime@t1 < AbsoluteTime@t2 := Module[
   {ranges},
-  ranges = {First@#, Last@#} & /@ 
-    Partition[DateRange[t1, DatePlus[t2, {1, "Day"}]], 30, 30, 1, {}];
+  ranges = {First@#, Last@#} & /@ Partition[DateRange[t1, DatePlus[t2, {1, "Day"}]], 30, 30, 1, {}];
   Union@Flatten[
     GetRussianData["Temperature", #] & /@ ranges, 1]
   ]; 
