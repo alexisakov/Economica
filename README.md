@@ -15,3 +15,10 @@ You can start using it, e.g. by calling
 
     <<Economica`
     
+## Updating
+
+To update again using the ProjectInstall[] package:
+
+    Needs["ProjectInstaller`"]
+    ProjectUninstall["Economica"]
+    ProjectInstall[URL["https://github.com/alexisakov/Economica/archive/master.zip"]]

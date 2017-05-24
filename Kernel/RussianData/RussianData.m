@@ -50,7 +50,11 @@ GetRussianData["ElectricityConsumption", {t1_, t2_}] /;
   {rawEnergy, cleanEnergy},
   rawEnergy = 
    Import[
+<<<<<<< HEAD
    "http://www.so-ups.ru/index.php?id=ees_gen_consump_day&no_cache=1&tx_ms1cdu_pi1[kpo]=1019&tx_ms1cdu_pi1[dt]=" <> 
+=======
+   "http://www.so-ups.ru/index.php?id=ees_gen_consump_day&no_\cache=1&tx_ms1cdu_pi1[kpo]=1019&tx_ms1cdu_pi1[dt]=" <> 
+>>>>>>> origin/master
      DateString[DatePlus[t2, {1, "Day"}], {"Day", ".", "Month", ".", "Year"}] <> 
      "&tx_ms1cdu_pi1[format]=xml", "XML"];
   cleanEnergy = Cases[rawEnergy,
