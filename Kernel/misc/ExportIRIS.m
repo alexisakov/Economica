@@ -9,6 +9,8 @@ ExportDynare::usage="ExportDynare";
 
 ExportTimeSeries::usage="ExportTimeSeries";
 
+ExportTimeSeriesIRIS::usage="Prepare data for IRIS";
+
 Begin["`Private`"] (* Begin Private Context *) 
 (*TODO: Write a function that exports in IRIS format.*)
 
@@ -37,6 +39,17 @@ ExportTimeSeries[filename_String, x_Association] := Module[{
    result = Join[{keys}, result];
    Export[filename, result]];
 
+(*Only quarterly data for starters.*)
+ExportTimeSeriesIRIS[filename_String, x_Association] := Module[{
+    keys = Keys@x,
+    values = Transpose[(#["Values"] & /@ (Values@x))],
+    dates, result},
+	dates = DateString[DateList[#][[;; 3]] , {"Year", "Q", "Quarter"}] & /@ (x[First@keys]["Dates"]);
+   
+   result = MapThread[Insert, {values, dates, Table[1, {Length[dates]}]}];
+   keys = Join[{""}, keys];
+   result = Join[{keys}, result];
+   Export[filename, result]];
   
 
 

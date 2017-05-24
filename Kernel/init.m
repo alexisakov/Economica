@@ -16,9 +16,16 @@ Get["NatLanInit`",Path -> {FileNameJoin[{DirectoryName[$InputFileName],"NaturalL
 Get["TransformTimeSeries`",Path -> {FileNameJoin[{DirectoryName[$InputFileName],"TimeSeries"}]}];
 Get["TimeSeriesFillMissing`",Path -> {FileNameJoin[{DirectoryName[$InputFileName],"TimeSeries"}]}];
 Get["HPFilter`",Path -> {FileNameJoin[{DirectoryName[$InputFileName],"TimeSeries"}]}];
+Get["TimeSeriesPureF`",Path -> {FileNameJoin[{DirectoryName[$InputFileName],"TimeSeries"}]}];
+Get["TimeSeriesStartOfMonthShift`",Path -> {FileNameJoin[{DirectoryName[$InputFileName],"TimeSeries"}]}];
+Get["TimeSeriesMakeCommonRange`",Path -> {FileNameJoin[{DirectoryName[$InputFileName],"TimeSeries"}]}];
+
+
+
 
 Get["TernaryPlot`",Path -> {FileNameJoin[{DirectoryName[$InputFileName],"TimeSeries","TimeSeriesCharts"}]}];
 Get["ShadedDateListPlot`",Path -> {FileNameJoin[{DirectoryName[$InputFileName],"TimeSeries","TimeSeriesCharts"}]}];
+Get["SnippedDateListPlot`",Path -> {FileNameJoin[{DirectoryName[$InputFileName],"TimeSeries","TimeSeriesCharts"}]}];
 Get["FanChart`",Path -> {FileNameJoin[{DirectoryName[$InputFileName],"TimeSeries","TimeSeriesCharts"}]}];
 Get["TimeSeriesBarChart`",Path -> {FileNameJoin[{DirectoryName[$InputFileName],"TimeSeries","TimeSeriesCharts"}]}];
 Get["TwoAxisDateListPlot`",Path -> {FileNameJoin[{DirectoryName[$InputFileName],"TimeSeries","TimeSeriesCharts"}]}];
@@ -26,6 +33,7 @@ Get["MakeLegend`",Path -> {FileNameJoin[{DirectoryName[$InputFileName],"TimeSeri
 
 
 Get["GrangerTest`",Path -> {FileNameJoin[{DirectoryName[$InputFileName],"TimeSeries"}]}];
+Get["BerGalSegment`",Path -> {FileNameJoin[{DirectoryName[$InputFileName],"TimeSeries"}]}];
 Get["TimeSeriesJoin`",Path -> {FileNameJoin[{DirectoryName[$InputFileName],"TimeSeries"}]}];
 Get["TimeSeriesMinMax`",Path -> {FileNameJoin[{DirectoryName[$InputFileName],"TimeSeries"}]}];
 Get["VARinit`",Path -> {FileNameJoin[{DirectoryName[$InputFileName],"TimeSeries","VAR"}]}];

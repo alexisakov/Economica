@@ -19,11 +19,45 @@ Options[TimeSeriesTransform] = {Frequency -> 12};
 
 TimeSeriesYoY[ts_]:=100*(ts/TimeSeriesMonthShift[ts,12]-1);
 TimeSeriesMoM[ts_]:=100*(ts/TimeSeriesMonthShift[ts,1]-1);
+TimeSeriesQoQ[ts_]:=100*(ts/TimeSeriesMonthShift[ts,3]-1);
+
 
 
 TimeSeriesIntegrate[ts_] := 
  TimeSeries[{ts["Dates"], 
-    Rest@FoldList[#1*(1 + #2/100) &, 1, ts["Values"]]}\[Transpose]]
+    Rest@FoldList[#1*(1 + #2/100) &, 1, ts["Values"]]}\[Transpose]];
+
+
+
+ TimeSeriesYoYIntegrate[growthRatesTimeSeries_, initialConditionsTimeseries_] := Module[{
+   frq = Length@initialConditionsTimeseries["Values"],
+   mults = growthRatesTimeSeries["Values"],
+   level = List[]
+   },
+  level = Flatten@FoldList[
+     #1[[;; Length@#2]]*(1 + #2/100) &,
+     initialConditionsTimeseries["Values"],
+     Partition[growthRatesTimeSeries["Values"], frq, frq, 1, {}]
+     ];
+  TimeSeries[{Join[initialConditionsTimeseries["Dates"], growthRatesTimeSeries["Dates"]], level}\[Transpose]]
+  ];
+
+(*TODO: This should be rewritten to take advantage not of frequency but to difference within the year.
+   It also should give error if the data does not start from the first month or quarter of the year.*)
+TimeSeriesYTDToLevel[ts_, freq_: 4] := Module[{
+   dt = ts["Dates"],
+   yrs ,
+   tws
+   },
+  yrs = Union[(DateList /@ dt)[[All, 1]]];
+  tws = Flatten@(Prepend[
+        Differences[
+         TimeSeriesWindow[ts, {{#, 1}, {#, 12}}]["Values"]], 
+        TimeSeriesWindow[ts, {{#, 1}, {#, 12}}]["FirstValue"]] & /@ 
+      yrs);
+  TimeSeries[{dt, tws}\[Transpose]]
+  ];
+
 
 
 TimeSeriesTransform::unknwntrnsfm="This transform is yet unknown. Consider adding it."
@@ -37,8 +71,7 @@ TimeSeriesTransform[ts_List, FROM_, TO_, OptionsPattern[]] := Module[
    FROM == "Level" && TO == "QoQ",
    	data = Ratios[data] - 1; dates = Rest@dates;,
    
-   (*TODO: This should be rewritten to take advantage not of frequency but to difference within the year.
-   It also should give error if the data does not start from the first month or quarter of the year.*)
+
    
    FROM == "YTD" && TO == "Level",
    data = Flatten[
