@@ -1,3 +1,5 @@
+(* ::Package:: *)
+
 (* Mathematica Package *)
 
 BeginPackage["Economica`"]
@@ -13,6 +15,8 @@ ExportTimeSeriesIRIS::usage="Prepare data for IRIS";
 
 Begin["`Private`"] (* Begin Private Context *) 
 (*TODO: Write a function that exports in IRIS format.*)
+
+Options[ExportTimeSeriesIRIS] = {DateFormat->{"Year","Q","Quarter"}};
 
 ExportDynare[filename_String, x_Association] := Module[
   {keys = Keys@x, values = Values@x,
@@ -40,11 +44,11 @@ ExportTimeSeries[filename_String, x_Association] := Module[{
    Export[filename, result]];
 
 (*Only quarterly data for starters.*)
-ExportTimeSeriesIRIS[filename_String, x_Association] := Module[{
+ExportTimeSeriesIRIS[filename_String, x_Association, OptionsPattern[]] := Module[{
     keys = Keys@x,
     values = Transpose[(#["Values"] & /@ (Values@x))],
     dates, result},
-	dates = DateString[DateList[#][[;; 3]] , {"Year", "Q", "Quarter"}] & /@ (x[First@keys]["Dates"]);
+	dates = DateString[DateList[#][[;; 3]], OptionValue[DateFormat]] & /@ (x[First@keys]["Dates"]);
    
    result = MapThread[Insert, {values, dates, Table[1, {Length[dates]}]}];
    keys = Join[{""}, keys];
