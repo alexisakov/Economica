@@ -125,6 +125,10 @@ HPFilter[x_List, a_?Positive] :=
               $Failed, LinearSolve::"npdef"];
     If[y === $Failed, Null, y]];
 
+(*TODO: Handle missing values etc.*)
+HPFilter[x_TemporalData, a_?Positive] := 
+  TimeSeries@Transpose[{x["Dates"], HPFilter[x["Values"], a]}];
+
 
 HPlot[x_ /; VectorQ[x, NumericQ], {aMin_?NumberQ, aMax_?NumberQ}, opts___] := Module[
     {a, i = makeI[Length[x]], p = makeP[Length[x]]},
