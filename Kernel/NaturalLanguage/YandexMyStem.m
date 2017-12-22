@@ -1,15 +1,13 @@
 (* Mathematica Package *)
 
 (*
-Source: http://company.yandex.ru/technologies/mystem/help.xml.
-TODO: Make import time constrained
-TimeConstrained[
-	While[Not@FileExistsQ[FileNameJoin[{$TemporaryDirectory,"mmax13.sp0"}]]],
-15,
-Message[x13::thirtyseconds,Import[FileNameJoin[{$TemporaryDirectory,"mmax13.err"}],"Text"]];Abort[]
-];
-*)
+Source: https://tech.yandex.ru/mystem/
+TODO: 
+201712 Check if export is succesful
 
+v2.0 Now no need to copy the mystem.exe to win directory. Problem solve using this note http://forums.wolfram.com/mathgroup/archive/2006/May/msg00457.html 
+    + update the mystem distro. It is a x64 version from here https://tech.yandex.ru/mystem/
+*)
 
 
 BeginPackage["Economica`"]
@@ -21,45 +19,30 @@ InitializeYandexMyStem::usage="YandexMyStem[s] produces a list of stemmed words.
 
 Begin["`Private`"] (* Begin Private Context *) 
 
-YandexMyStem[t_] := Module[
-  {result},
-  (*First check whether mystem.exe exists.*)
-  InitializeYandexMyStem[];
-  Export[FileNameJoin[{$TemporaryDirectory, "mystem.txt"}], t, "Text",
-    CharacterEncoding -> "WindowsCyrillic"];
-  Run["mystem -l \"" <> 
-    FileNameJoin[{$TemporaryDirectory, "mystem.txt"}] <> "\" \"" <> 
-    FileNameJoin[{$TemporaryDirectory, "mystemOUT.txt"}] <> "\""];
+QuoteString[s_]:="\""<>ToString@s<>"\"";
+$YMSDirectory=DirectoryName[$InputFileName];
+
+
+YandexMyStem[t_] := Module[{
+  result,
+  inFile = (FileNameJoin[{$TemporaryDirectory, "mystem.txt"}]),
+  ouFile = (FileNameJoin[{$TemporaryDirectory, "mystemOUT.txt"}])
+  },
+  Export[inFile, t, "Text", CharacterEncoding -> "UTF-8"];
+  Run["cd " <> (QuoteString@$YMSDirectory) <> " && .\\mystem -l " <> (QuoteString@inFile) <> " " <> (QuoteString@ouFile)];
   Pause[3];
-  result = 
-   Import[FileNameJoin[{$TemporaryDirectory, "mystemOUT.txt"}], 
-    "Text", CharacterEncoding -> "WindowsCyrillic"];
-  DeleteFile[FileNameJoin[{$TemporaryDirectory, "mystem.txt"}]];
-  DeleteFile[FileNameJoin[{$TemporaryDirectory, "mystemOUT.txt"}]];
+  result = Import[ouFile, "Text", CharacterEncoding ->  "UTF-8"];
+  DeleteFile[{inFile,ouFile}];
   toWordList[result]
   ];
   
   
-  toWordList[l_String] := StringSplit[
+toWordList[l_String] := StringSplit[
    StringReplace[
     StringReplace[l,
      Shortest["{" ~~ x__ ~~ "|" ~~ __ ~~ "}"] :> x <> " "],
-    {
-     "{" -> " ",
-     "}" -> " ",
-     {"?"} -> ""
-     }
-    ],
-   WhitespaceCharacter] /. "" :> Sequence[];
+    {     "{" -> " ", "}" -> " ", {"?"} -> ""}], WhitespaceCharacter] /. "" :> Sequence[];
   
-InitializeYandexMyStem[]:=Module[{},
-	If[Not@FileExistsQ["C:\\Windows\\System32\\mystem.exe"],
-		CopyFile[
-			FileNameJoin[{DirectoryName[$InputFileName],"mystem.exe"}],
-			"C:\\Windows\\System32\\mystem.exe"];
-		]
-	];
-
 End[] (* End Private Context *)
 
 EndPackage[]
