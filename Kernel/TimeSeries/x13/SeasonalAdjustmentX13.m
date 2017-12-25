@@ -2,7 +2,7 @@
 
 (*
 Author: Alex Isakov
-Contact: ale.Isakov@gmail.com
+Contact: ale.isakov@gmail.com
 Version: V .4 2015-07-13
 Added ability to run from the program folder without the need to copy to Windows\System32.
 Version: V .3 2014-03-04
@@ -106,67 +106,66 @@ CreateTemporaryX13FreeFile[filename_, x_,OptionsPattern[]] := Module[
 
 (* ***The key SA function*** *)
 SeasonalAdjustmentX13[x_,OptionsPattern[]]:=Module[
-	{input=x["Path"] /. {xx_, y_} :> {DateList@xx, y}, 
-	outputText,
-	originalDates=DateList /@ x["Dates"],
-	inputfile, period
-	},
+		{input=x["Path"] /. {xx_, y_} :> {DateList@xx, y}, 
+		outputText,
+		originalDates=DateList /@ x["Dates"],
+		inputfile, period
+		},
 
 	(*TODO: Determine the period of the series in a function.*)
 	period=Max[Length/@GatherBy[DateList/@originalDates,First]];
 	
-If[OptionValue[StockOrFlow]=="Flow",
-		input[[All, 2]] = Rest@FoldList[#1*(1 + #2/100.) &, 1, input[[All, 2]]]
-		];
-	
-	CreateTemporaryX13FreeFile["x11reg.dat",TimeSeries@input,X13Period->period]; 
-	inputfile=FileNameJoin[{$TemporaryDirectory,"x11reg.dat"}];
-	
-	outputText="series{
-		title = \""<>"Title"<>"\"
-		period = "<>ToString@period<>"
-		file = "<> QuoteString@inputfile <>"
-		format = \"DATEVALUE\""<>"
-		
-	}
-	"
-	
-	<> (If[OptionValue[X11Regression] === False, "",
-		CreateTemporaryX13FreeFile["x11reg.var",OptionValue[X11Regression]]; 
-		inputfile=FileNameJoin[{$TemporaryDirectory,"x11reg.var"}];
-		"regression {
-			user = \"somevariable\"
-			file = "<> QuoteString@inputfile <>"
-			format = \"DATEVALUE\"
-			}"]) <>"
-		
-	forecast{
-		maxlead = 6
-		maxback = 0}
-		
-	" <> If[OptionValue[StockOrFlow]=="Flow",
-			"transform{
-		function=log}",
-		""] <> "
-	
-	x11{
-		mode= " <> If[OptionValue[StockOrFlow]=="Flow","mult","mult"] <>"
-		final = (user)
-		print=none
-		save=("<>Quiet@Check[StringDeleteBraces@ToString[OptionValue[Output]],""]<>")}";
-	
-	inputfile =FileNameJoin[{$TemporaryDirectory,"mmax13"}];
-	Export[inputfile <> ".spc",outputText,"Text"];
-	Run["cd \"" <> $X13Directory <> "\" && .\\x13as", QuoteString@inputfile];
-		
-	inputfile=ReadX13Output[OptionValue[Output],DatesColumn->True,X13Period->period];
-	
 	If[OptionValue[StockOrFlow]=="Flow",
-		inputfile = (Ratios@inputfile-1)*100;
-		originalDates=originalDates[[2;;]];
-		];
-	
-	TimeSeries@Transpose[{originalDates,inputfile[[All,2]]}]
+			input[[All, 2]] = Rest@FoldList[#1*(1 + #2/100.) &, 1, input[[All, 2]]]
+			];
+		
+		CreateTemporaryX13FreeFile["x11reg.dat",TimeSeries@input,X13Period->period]; 
+		inputfile=FileNameJoin[{$TemporaryDirectory,"x11reg.dat"}];
+		
+		outputText="series{
+			title = \""<>"Title"<>"\"
+			period = "<>ToString@period<>"
+			file = "<> QuoteString@inputfile <>"
+			format = \"DATEVALUE\""<>"
+			
+		}\n"
+		
+
+		<> If[OptionValue[StockOrFlow]=="Flow","transform{function=log}", ""] 
+
+		<> (If[OptionValue[X11Regression] === False, "",
+			CreateTemporaryX13FreeFile["x11reg.var",OptionValue[X11Regression]]; 
+			inputfile=FileNameJoin[{$TemporaryDirectory,"x11reg.var"}];
+			"x11regression {
+				user = \"somevariable\"
+				usertype = td
+				file = "<> QuoteString@inputfile <>"
+
+				format = \"DATEVALUE\"
+				}"]) <>
+		"
+		forecast{
+			maxlead = 6
+			maxback = 0}
+			
+		x11{
+			mode= " <> If[OptionValue[StockOrFlow]=="Flow","mult","mult"] <>"
+			final = (user)
+			print=none
+			save=("<>Quiet@Check[StringDeleteBraces@ToString[OptionValue[Output]],""]<>")}";
+		
+		inputfile =FileNameJoin[{$TemporaryDirectory,"mmax13"}];
+		Export[inputfile <> ".spc",outputText,"Text"];
+		Run["cd \"" <> $X13Directory <> "\" && .\\x13as", QuoteString@inputfile];
+			
+		inputfile=ReadX13Output[OptionValue[Output],DatesColumn->True,X13Period->period];
+		
+		(*If[OptionValue[StockOrFlow]=="Flow",
+			inputfile = (Ratios@inputfile-1)*100;
+			originalDates=originalDates[[2;;]];
+			];*)
+		
+		TimeSeries@Transpose[{originalDates,inputfile[[All,2]]}]
 ]
 
 
