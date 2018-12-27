@@ -12,7 +12,6 @@ TODO: Check VAR stability
 TODO: Add the standard form for output with `Format[bin[x_,y_],StandardForm]:=MatrixForm[{{x},{y}}]
 *)
 
-Begin["`Private`"] (* Begin Private Context *) 
 TVARModelFit::nobsError="There are `1` endogenious observations and `2` exogenous observations.";
 
 Options[TVARModelFit]={NumberOfTrialThresholds->10};

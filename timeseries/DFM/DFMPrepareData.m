@@ -61,7 +61,3 @@ DFMPrepareData[M_?MatrixQ,q_?MatrixQ,n_?IntegerQ]:=Module[
 	A["monthOfquarter"]=monthOfquarter;*)
 	A
 	]
-
-End[] (* End Private Context *)
-
-EndPackage[]

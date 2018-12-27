@@ -104,6 +104,3 @@ VARImpulseResponseConfidenceInterval[SVARObject_, OptionsPattern[]]:=Module[
 	svarM
 ];
 
-End[] (* End Private Context *)
-
-EndPackage[]
