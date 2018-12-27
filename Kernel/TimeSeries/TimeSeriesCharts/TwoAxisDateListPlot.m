@@ -1,5 +1,5 @@
 (*Wolfram Language package*) 
-Options[TwoAxisDateListPlot] =  Options[DateListPlot];
+Options[TwoAxisDateListPlot] =  Join[Options[DateListPlot],{ReversedAxis->False}];
 
 Off[NumberForm::sigz];
 
@@ -13,8 +13,10 @@ With[
    
    firstaxisrange = {Min@#, Max@#} &@Flatten[#["Values"] & /@ list1];
    secondaxisrange = {Min@#, Max@#} &@Flatten[#["Values"] & /@ list2];
+   
    epilogData = 
     Rescale[#, secondaxisrange, firstaxisrange ] & /@ list2;
+   
    epilogData = Flatten[
      {ColorData["Rainbow"] /@ 
         Range[Length@list1 + 1, Length@list1 + Length@list2],
@@ -30,7 +32,7 @@ With[
     Epilog -> epilogData,
     FrameTicks -> {Quiet[
        {{da1, IntegerPart[#]& /@ da1}\[Transpose],
-        {da1, IntegerPart[#]& /@ da2}\[Transpose]}],
+        {da1, If[OptionValue[ReversedAxis],-1,1]*(IntegerPart[#]& /@ da2)}\[Transpose]}],
       {True, None}}, Frame -> {True, True, False, True}, Axes -> False,
       Sequence @@ ((# -> OptionValue[#]) & /@ opt)]
    ]]

@@ -18,14 +18,18 @@ TODO: add ability to run x13 without copying the file to system32:
 	pathToExe=FileNameJoin[{$UserBaseDirectory,"Applications","Economica","Kernel","TimeSeries","x13","X13AS"}]
 TODO: Switch between negative and positive values
 TODO: Add frequency options: month and quarter
-TODO: Add Multivariate support*)
+TODO: Add Multivariate support
+TODO: https://mathematica.stackexchange.com/questions/178863/run-does-not-work
+
+
+*)
 
 BeginPackage["Economica`"]
 
 SeasonalAdjustmentX13::usage="SeasonalAdjustmentX13[s] seasonally adjust time-series s."
 
 CreateTemporaryX13FreeFile::usage="Create temporary file from TimeSeries object."
-
+QuoteString[s_]:="\""<>ToString@s<>"\"";
 Begin["`Private`"] (* Begin Private Context *) 
 
 (*ClearAll[x13,runx13]*)
@@ -55,7 +59,6 @@ Options[SeasonalAdjustmentX13]={
 
 (*ARIMAX13 utilities*)
 
-QuoteString[s_]:="\""<>ToString@s<>"\"";
 StringDeleteBraces[s_]:=StringReplace[ToString@s,{"{"->"","}"->""}];
 StringSwapBraces[s_]:=StringReplace[ToString@s,{"{"->"(","}"->")"}];
 $X13Directory=DirectoryName[$InputFileName];
@@ -94,12 +97,12 @@ CreateTemporaryX13FreeFile[filename_, x_,OptionsPattern[]] := Module[
 	{dates,values,exportText},
 	Which[
 		(OptionValue@X13Period)==12,
-			dates = DateString[#, {"Year", " ", "MonthShort"}] & /@ x["Dates"],
+			dates = DateString[#, {"Year", " ", "MonthShort"}] & /@ If[ListQ@x,First@(#["Dates"]&/@ x),x["Dates"]],
 		(OptionValue@X13Period)==4,
-			dates = DateString[#, {"Year", " ", "Quarter"}] & /@ x["Dates"]
+			dates = DateString[#, {"Year", " ", "Quarter"}] & /@ If[ListQ@x,First@(#["Dates"]&/@ x),x["Dates"]]
 	];
-	values = x["Values"];
-	exportText=StringReplace[StringJoin@Riffle[(StringDeleteBraces@#)<>" " & /@ ({dates, values}\[Transpose]), "\n"], "," -> ""];
+	values = If[ListQ@x,#["Values"]&/@ x,x["Values"]];
+	exportText=StringReplace[StringJoin@Riffle[(StringDeleteBraces@#)<>" " & /@ (If[ListQ@x,Flatten[{{dates}, values},1],{dates, values}]\[Transpose]), "\n"], "," -> ""];
 	Export[FileNameJoin[{$TemporaryDirectory,filename }],exportText,"Text"];
   ];
 
@@ -137,8 +140,12 @@ SeasonalAdjustmentX13[x_,OptionsPattern[]]:=Module[
 			CreateTemporaryX13FreeFile["x11reg.var",OptionValue[X11Regression]]; 
 			inputfile=FileNameJoin[{$TemporaryDirectory,"x11reg.var"}];
 			"x11regression {
-				user = \"somevariable\"
-				usertype = td
+				user = "<> If[ListQ@OptionValue[X11Regression],
+					StringSwapBraces[("\"somevariable"<>ToString[#]<>"\"")&/@(Range@Length@OptionValue[X11Regression])],
+					"\"somevariable\""] <>"
+				usertype = "<> If[ListQ@OptionValue[X11Regression],
+					StringSwapBraces[Prepend[ConstantArray["user",Length@OptionValue[X11Regression]-1],"td"]],
+					"td"] <>"
 				file = "<> QuoteString@inputfile <>"
 
 				format = \"DATEVALUE\"
@@ -146,7 +153,7 @@ SeasonalAdjustmentX13[x_,OptionsPattern[]]:=Module[
 		"
 		forecast{
 			maxlead = 6
-			maxback = 0}
+			maxback = 6}
 			
 		x11{
 			mode= " <> If[OptionValue[StockOrFlow]=="Flow","mult","mult"] <>"

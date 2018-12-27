@@ -8,6 +8,8 @@ ImportCEIC::usage="ImportCEIC[] imports an Excel sheet converting it to an Assoc
 ImportTimeSeries::usage="ImportTimeSeries[] imports an Excel sheet converting it to an Association[] of TimeSeries[]";
 ImportIRIS::usage="ImportIRIS[] imports an Excel sheet converting it to an Association[] of TimeSeries[]";
 
+ExcelDateToDateList::usage="To date list"
+
 Begin["`Private`"] (* Begin Private Context *) 
 Options[ImportCEIC]={SeriesInformation->True};
 
@@ -25,6 +27,7 @@ Options[ImportCEIC]={SeriesInformation->True};
   Association[Rule @@@ ({impt[[1, 2 ;;]], timesseries}\[Transpose])]
   ];*)
   
+  ExcelDateToDateList[x_]:= (DatePlus[{1900, 1, 1}, x - 2]);
   
   ImportCEIC[XLFile_, SheetName_String, OptionsPattern[]] := Module[
 	  {impt = Import[XLFile, {"Sheets", SheetName}]},
@@ -66,16 +69,24 @@ With[{opt = First /@ Options[ImportCEIC]},
 		Map[TimeSeries/@#&,impCEIC]
 	];
 ];
- 
 
-Options[ImportIRIS]=Options[ImportCEIC]
+  ExcelDateToDateList[x_]:= (DatePlus[{1900, 1, 1}, x - 2]);
+
+Options[ImportIRIS]=Join[Options[ImportCEIC],{Frequency->"Quarter"}]
 ImportIRIS[XLFile_, OptionsPattern[]] := Module[
   {impt = Import[XLFile],
    timesseries, dims, offset, ts},
   offset=If[OptionValue[SeriesInformation]==True,3,3];
   timesseries = impt[[offset;;]];
   dims = Dimensions@timesseries;
-  timesseries[[All, 1]] = DatePlus[DateList[{#, {"Year", "Q", "Quarter"}}], {2, "Month"}] & /@ timesseries[[All, 1]];
+
+  Which[
+    OptionValue[Frequency]=="Quarter",
+      timesseries[[All, 1]] = DatePlus[DateList[{#, {"Year", "Q", "Quarter"}}], {2, "Month"}] & /@ timesseries[[All, 1]],
+    OptionValue[Frequency]=="Month",
+      timesseries[[All, 1]] = DateList[{#, {"Year", "M", "Month"}}] & /@ timesseries[[All, 1]]
+    ]; 
+
   timesseries = timesseries[[All, {1, #}]] & /@ Range[2, Last@dims];
   timesseries = timesseries /. {_, "NaN"} :> Sequence[];
   timesseries = timesseries /. {_, $Failed} :> Sequence[];

@@ -18,12 +18,9 @@ Get["TimeSeriesFillMissing`",Path -> {FileNameJoin[{DirectoryName[$InputFileName
 Get["HPFilter`",Path -> {FileNameJoin[{DirectoryName[$InputFileName],"TimeSeries"}]}];
 Get["TimeSeriesPureF`",Path -> {FileNameJoin[{DirectoryName[$InputFileName],"TimeSeries"}]}];
 Get["TimeSeriesStartOfMonthShift`",Path -> {FileNameJoin[{DirectoryName[$InputFileName],"TimeSeries"}]}];
-<<<<<<< HEAD
 Get["TimeSeriesMakeCommonRange`",Path -> {FileNameJoin[{DirectoryName[$InputFileName],"TimeSeries"}]}];
 
 
-=======
->>>>>>> origin/master
 
 
 Get["TernaryPlot`",Path -> {FileNameJoin[{DirectoryName[$InputFileName],"TimeSeries","TimeSeriesCharts"}]}];

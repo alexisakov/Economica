@@ -4,9 +4,4 @@ TimeSeriesMin[ts1_TemporalData, ts2_TemporalData] :=
 TimeSeriesMax[ts1_TemporalData, ts2_TemporalData] := 
  ts1 - ((ts1 - ts2)) UnitStep[-(ts1 - ts2)];
  
-<<<<<<< HEAD
 TimeSeriesQuantile[l_List, q_Real] :=  TimeSeriesThread[Quantile[# /. (Null | "" -> Sequence[]), q] &, l];
-=======
-TimeSeriesQuantile[l_List, q_Real] := 
-  TimeSeriesThread[Quantile[# /. (Null | "" -> Sequence[]), q] &, l];
->>>>>>> origin/master

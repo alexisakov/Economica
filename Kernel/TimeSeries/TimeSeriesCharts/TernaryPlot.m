@@ -50,7 +50,7 @@ TernaryPlot[dat_, regnum_, nLab_, nms_List, OptionsPattern[]] := Module[
 			Text[Style[nms[[2]], Green, FontFamily -> "Arial",FontSize -> 22/1.5,LineSpacing -> {0.1, 10}], {1 + 0.02, -0.02}],
 			Text[Style[nms[[1]], Red, FontFamily -> "Arial", FontSize -> 22/1.5,LineSpacing -> {0.1, 10}], {0.5, Sqrt[3]/2 + 0.02}]}, 
 			ImageSize -> 600],
-		cl = Graphics[{Thick, Line[{{0, 0}, {1, 0}, {0.5, Sqrt[3]/2}, {0, 0}}]},  ImageSize -> 600],
+		cl = Graphics[{Thin, Line[{{0, 0}, {1, 0}, {0.5, Sqrt[3]/2}, {0, 0}}]},  ImageSize -> 600],
 		
 		(**The data points**)
 		urd = unitize /@ (dat),
