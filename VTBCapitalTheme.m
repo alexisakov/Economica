@@ -51,3 +51,9 @@ LoadVTBCapitalTheme[]:= (
 	)
 
 PackageExport["LoadVTBCapitalTheme"]
+
+Options[VTBTextStyle]={FontSize -> 22/1.5}
+VTBTextStyle[x_,OptionsPattern[]] := Style[x, FontFamily -> "Arial", FontSize -> OptionValue[FontSize], Black, LineSpacing -> {0.1, 10}]; 
+VTBTextStyleNoColor[x_] := Style[x, FontFamily -> "Arial", FontSize -> 22/1.5,  LineSpacing -> {0.1, 10}];
+PackageExport["VTBTextStyle"]
+PackageExport["VTBTextStyleNoColor"]
