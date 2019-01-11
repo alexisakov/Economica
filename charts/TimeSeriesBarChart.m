@@ -20,8 +20,9 @@ Options[TimeSeriesBarChart] = Join[Options[BarChart],
      labels = DateRange[First@dts, Last@dts, OptionValue[DateLabelStep]];
      ticks = If[MemberQ[DateString/@labels, DateString@#], VTBTextStyle@DateString[#, OptionValue[DateTicksFormat]], ""] & /@ dts;
      BarChart[mts,
-     ChartLabels -> {ticks, None},
-     Sequence @@ ((# -> OptionValue[#]) & /@ opt)]
+     ChartLabels -> {ticks, None}
+     (*Sequence @@ ((# -> OptionValue[#]) & /@ opt)*)
+     ]
     ]
   ];
   
@@ -37,7 +38,7 @@ Options[TimeSeriesBarChart] = Join[Options[BarChart],
 		
 		(*make the lines*)
 		
-		epiColor = ColorData["Rainbow"] /@ Range[Length@ts + 1, Length@ts + Length@tsLine];
+		epiColor = ColorDataVTBCapital2018 /@ Range[Length@ts + 1, Length@ts + Length@tsLine];
 		epiLen = Length@((First@tsLine)["Dates"]);
 		epiLines = (Line[{Range@epiLen,  #["Values"]}\[Transpose]])&/@tsLine;
 		epilog=Riffle[epiColor,epiLines];
@@ -47,7 +48,8 @@ Options[TimeSeriesBarChart] = Join[Options[BarChart],
 		BarChart[mts,
 			ChartLabels -> {ticks, None}, 
 			Epilog->epilog,
-			Sequence @@ ((# -> OptionValue[#]) & /@ opt)]
+      Prolog->OptionValue@Prolog
+      ]
     ]
   ];
 
