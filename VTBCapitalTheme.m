@@ -21,7 +21,14 @@ LoadVTBCapitalTheme[]:= (
 		];
 	Themes`AddThemeRules["VTBCapital2018", BarChart,
 		ChartStyle ->(Directive[EdgeForm[],ColorDataVTBCapital2018@#]&/@Range[8]), 
-		ChartLayout->"Stacked"
+		ChartLayout->"Stacked",
+		TicksStyle -> Directive[22/1.5, FontName -> "Arial" , Black, Opacity[0.3], FontOpacity -> 1]
+		];
+	Themes`AddThemeRules["VTBCapital2018", TimeSeriesBarChart,
+		ChartStyle ->(Directive[EdgeForm[],ColorDataVTBCapital2018@#]&/@Range[8]), 
+		ChartLayout->"Stacked",
+		TicksStyle -> Directive[22/1.5, FontName -> "Arial" , Black, Opacity[0.3], FontOpacity -> 1]
+	
 		];
 	Themes`AddThemeRules["VTBCapital2018",Histogram,
 		ChartLayout->"Stacked"
@@ -51,6 +58,7 @@ LoadVTBCapitalTheme[]:= (
 	)
 
 PackageExport["LoadVTBCapitalTheme"]
+PackageExport["ColorDataVTBCapital2018"]
 
 Options[VTBTextStyle]={FontSize -> 22/1.5}
 VTBTextStyle[x_,OptionsPattern[]] := Style[x, FontFamily -> "Arial", FontSize -> OptionValue[FontSize], Black, LineSpacing -> {0.1, 10}]; 
