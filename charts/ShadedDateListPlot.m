@@ -11,9 +11,10 @@ Options[ShadedDateListPlot] = Join[DeleteCases[Options[DateListPlot], GridLines 
 With[{opt = First /@ Options[DateListPlot]},
   ShadedDateListPlot[ddata_, ShadeDates_, OptionsPattern[]] :=
   Module[{yRange, yPadding},
-    With[{plot = 
-       DateListPlot[ddata, 
-        Sequence @@ ((# -> OptionValue[#]) & /@ opt)]},
+    With[{plot = DateListPlot[ddata, 
+      Epilog->OptionValue[Epilog],
+      PlotRange->OptionValue@PlotRange,
+      InterpolationOrder->OptionValue@InterpolationOrder]},
   yRange = 
       Last[PlotRange /. AbsoluteOptions[plot, PlotRange]];
      yPadding = 

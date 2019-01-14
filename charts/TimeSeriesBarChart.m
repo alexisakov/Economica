@@ -48,7 +48,8 @@ Options[TimeSeriesBarChart] = Join[Options[BarChart],
 		BarChart[mts,
 			ChartLabels -> {ticks, None}, 
 			Epilog->epilog,
-      Prolog->OptionValue@Prolog
+      Prolog->OptionValue@Prolog,
+      PlotTheme:>$PlotTheme
       ]
     ]
   ];
