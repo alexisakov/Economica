@@ -19,7 +19,7 @@ With[
     Rescale[#, secondaxisrange, firstaxisrange ] & /@ list2;
    
    epilogData = Flatten[
-     {ColorData["Rainbow"] /@ 
+     {ColorDataVTBCapital2018 /@ 
         Range[Length@list1 + 1, Length@list1 + Length@list2],
        Line[{#["Dates"], #["Values"]}\[Transpose]] & /@ 
         epilogData}\[Transpose]];
@@ -34,8 +34,8 @@ With[
     FrameTicks -> {Quiet[
        {{da1, IntegerPart[#]& /@ da1}\[Transpose],
         {da1, If[OptionValue[ReversedAxis],-1,1]*(IntegerPart[#]& /@ da2)}\[Transpose]}],
-      {True, None}}, Frame -> {True, True, False, True}, Axes -> False,
-      Sequence @@ ((# -> OptionValue[#]) & /@ opt)]
+      {True, None}}, Frame -> {True, True, False, True}, Axes -> False
+      ]
    ]]
 
 PackageExport["TwoAxisDateListPlot"]   
