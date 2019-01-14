@@ -21,6 +21,8 @@ LoadVTBCapitalTheme[]:= (
 		];
 	Themes`AddThemeRules["VTBCapital2018", BarChart,
 		ChartStyle ->(Directive[EdgeForm[],ColorDataVTBCapital2018@#]&/@Range[8]), 
+		ImageSize -> {24, 18}/1.5 cm,
+		AspectRatio -> 3/4,
 		ChartLayout->"Stacked",
 		TicksStyle -> Directive[22/1.5, FontName -> "Arial" , Black, Opacity[0.3], FontOpacity -> 1]
 		];
@@ -30,12 +32,25 @@ LoadVTBCapitalTheme[]:= (
 		TicksStyle -> Directive[22/1.5, FontName -> "Arial" , Black, Opacity[0.3], FontOpacity -> 1]
 	
 		];
+	Themes`AddThemeRules["VTBCapital2018", ShadedDateListPlot,
+		PlotStyle -> (ColorDataVTBCapital2018/@Range[8]),
+		ImageSize -> {24, 18}/1.5 cm,
+		AspectRatio -> 3/4,
+		TicksStyle -> Directive[22/1.5, FontName -> "Arial" , Black, Opacity[0.3], FontOpacity -> 1],
+		FrameTicksStyle -> Directive[22/1.5, FontName -> "Arial" , Black]
+	
+		];
 	Themes`AddThemeRules["VTBCapital2018",Histogram,
 		ChartLayout->"Stacked"
 		];
 	Themes`AddThemeRules["VTBCapital2018",DateListPlot,   
 		Axes -> True, 
-		Frame -> False  
+		Frame -> False,
+		PlotStyle -> (ColorDataVTBCapital2018/@Range[8]),
+		ImageSize -> {24, 18}/1.5 cm,
+		AspectRatio -> 3/4,
+		TicksStyle -> Directive[22/1.5, FontName -> "Arial" , Black, Opacity[0.3], FontOpacity -> 1],
+		FrameTicksStyle -> Directive[22/1.5, FontName -> "Arial" , Black]
 		];
 	Themes`AddThemeRules["VTBCapital2018",Plot,   
 	    Axes -> True, 
