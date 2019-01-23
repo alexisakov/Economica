@@ -7,18 +7,30 @@ ImportIRIS::usage="ImportIRIS[] imports an Excel sheet converting it to an Assoc
 
 ExcelDateToDateList::usage="To date list"
 
+(*https://mathematica.stackexchange.com/questions/184535/11-3-import-of-files-with-paths-containing-non-ascii-characters
+The change in mathematica Importer 
+*)
+
 Options[ImportCEIC]={SeriesInformation->True};
 
 
 ExcelDateToDateList[x_]:= (DatePlus[{1900, 1, 1}, x - 2]);
   
 ImportCEIC[XLFile_, SheetName_String, OptionsPattern[]] := Module[
-	  {impt = Import[XLFile, {"Sheets", SheetName}]},
+	  {impt},
+	  impt=If[$VersionNumber<11.3,
+	  	Import[XLFile, {"Sheets", SheetName}],
+	  	Import[XLFile, {"SheetsLegacy", SheetName}]
+	  	];
 	  ParseXlSheet@impt	 
   ];
   
  ImportCEIC[XLFile_, SheetName_List, OptionsPattern[]] := Module[
-	  {impt = Import[XLFile, {"Sheets", SheetName}]},
+	 {impt},
+	  impt=If[$VersionNumber<11.3,
+	  	Import[XLFile, {"Sheets", SheetName}],
+	  	Import[XLFile, {"SheetsLegacy", SheetName}]
+	  	];
 	  ParseXlSheet/@impt	 
  ];
   
