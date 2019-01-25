@@ -41,7 +41,7 @@ ParseXlSheet[sheet_,OptionsPattern[]]:=Module[
 	offset=If[OptionValue[SeriesInformation]==True,12,2];
   	timesseries = sheet[[offset;;]];
   	dims = Dimensions@timesseries;
-  	timesseries[[All, 1]] = (DatePlus[{1900, 1, 1}, # - 2])& /@ timesseries[[All, 1]];
+  	timesseries[[All, 1]] = ExcelDateToDateList /@ timesseries[[All, 1]];
   	timesseries = timesseries[[All, {1, #}]] & /@ Range[2, Last@dims];
   	timesseries = timesseries /. {_, "#N/A"} :> Sequence[];
   	timesseries = timesseries /. {_, $Failed} :> Sequence[];
@@ -88,3 +88,4 @@ ImportIRIS[XLFile_, OptionsPattern[]] := Module[
   
 PackageExport["ImportIRIS"]
 PackageExport["ImportTimeSeries"]
+PackageExport["ExcelDateToDateList"]
