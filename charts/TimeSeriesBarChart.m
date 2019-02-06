@@ -20,7 +20,9 @@ Options[TimeSeriesBarChart] = Join[Options[BarChart],
      labels = DateRange[First@dts, Last@dts, OptionValue[DateLabelStep]];
      ticks = If[MemberQ[DateString/@labels, DateString@#], VTBTextStyle@DateString[#, OptionValue[DateTicksFormat]], ""] & /@ dts;
      BarChart[mts,
-     ChartLabels -> {ticks, None}
+     ChartLabels -> {ticks, None},
+     Epilog->OptionValue@Epilog,
+      Prolog->OptionValue@Prolog
      (*Sequence @@ ((# -> OptionValue[#]) & /@ opt)*)
      ]
     ]
@@ -47,7 +49,7 @@ Options[TimeSeriesBarChart] = Join[Options[BarChart],
 		
 		BarChart[mts,
 			ChartLabels -> {ticks, None}, 
-			Epilog->epilog,
+			Epilog->Join[epilog,OptionValue@Epilog],
       Prolog->OptionValue@Prolog,
       PlotTheme:>$PlotTheme
       ]
