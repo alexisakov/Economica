@@ -1,0 +1,2 @@
+2019-03-07 17:38:21,678 INFO  - Chart has been successfully saved
+2019-03-07 17:41:33,873 INFO  - Chart has been successfully saved
