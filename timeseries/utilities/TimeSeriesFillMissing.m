@@ -17,5 +17,14 @@ TimeSeriesFillMissing[X_List, dateRange_List] := Module[{
     {x_List} :> {First@x, Null}, {x_List, y_List} :> y
     },
    1]]
+
+
+   TimeSeriesCleanMissing[ts_] := Module[{
+   tsdp = ts["DatePath"]
+   },
+  TimeSeries[(tsdp) /. {x_, y_?(Not@NumericQ@# &)} :> Sequence[]]
+  ]
   
   PackageExport["TimeSeriesFillMissing"]
+  PackageExport["TimeSeriesCleanMissing"]
+
