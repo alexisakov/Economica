@@ -41,12 +41,25 @@ LoadVTBCapitalTheme[]:= (
 	
 		];
 	Themes`AddThemeRules["VTBCapital2018",Histogram,
-		ChartLayout->"Stacked"
+		ChartLayout->"Stacked",
+		ChartStyle ->(Directive[EdgeForm[],ColorDataVTBCapital2018@#]&/@Range[8]), 
+		ImageSize -> {24, 18}/1.5 cm,
+		AspectRatio -> 3/4,
+		TicksStyle -> Directive[22/1.5, FontName -> "Arial" , Black, Opacity[0.3], FontOpacity -> 1]
 		];
 	Themes`AddThemeRules["VTBCapital2018",DateListPlot,   
 		Axes -> True, 
 		Frame -> False,
-		PlotStyle -> (ColorDataVTBCapital2018/@Range[8]),
+		PlotStyle -> ({ColorDataVTBCapital2018[#],Thickness[0.008]}&/@Range[8]),
+		ImageSize -> {24, 18}/1.5 cm,
+		AspectRatio -> 3/4,
+		TicksStyle -> Directive[22/1.5, FontName -> "Arial" , Black, Opacity[0.3], FontOpacity -> 1],
+		FrameTicksStyle -> Directive[22/1.5, FontName -> "Arial" , Black]
+		];
+	Themes`AddThemeRules["VTBCapital2018",ListPlot,   
+		Axes -> True, 
+		Frame -> False,
+		PlotStyle -> ({ColorDataVTBCapital2018[#],Thickness[0.008]}&/@Range[8]),
 		ImageSize -> {24, 18}/1.5 cm,
 		AspectRatio -> 3/4,
 		TicksStyle -> Directive[22/1.5, FontName -> "Arial" , Black, Opacity[0.3], FontOpacity -> 1],
