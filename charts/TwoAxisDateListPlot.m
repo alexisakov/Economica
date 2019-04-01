@@ -34,7 +34,9 @@ With[
     FrameTicks -> {Quiet[
        {{da1, IntegerPart[#]& /@ da1}\[Transpose],
         {da1, If[OptionValue[ReversedAxis],-1,1]*(IntegerPart[#]& /@ da2)}\[Transpose]}],
-      {True, None}}, Frame -> {True, True, False, True}, Axes -> False
+      {True, None}}, 
+      Frame -> {True, True, False, True}, Axes -> False,
+      Prolog->OptionValue[Prolog]
       ]
    ]]
 

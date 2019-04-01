@@ -81,5 +81,5 @@ GetRussianData["ElectricityConsumption", {t1_, t2_}] /;
     Select[cleanEnergy, AbsoluteTime@First@# >= AbsoluteTime@t1 &][[All, {1, 2}]]
   ];
   
-PackageExport["GetRussianData"]
+PackageExport["RussianData"]
 
