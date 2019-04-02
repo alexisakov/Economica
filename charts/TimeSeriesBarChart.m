@@ -17,7 +17,7 @@ Options[TimeSeriesBarChart] = Join[Options[BarChart],
      mts, labels, ticks},
      mts = TimeSeries[{dts, vals}\[Transpose]];
      (*constructing the labels*)
-     labels = DateRange[First@dts, Last@dts, OptionValue[DateLabelStep]];
+     labels = DateRange[DateList@First@dts, DateList@Last@dts, OptionValue[DateLabelStep]];
      ticks = If[MemberQ[DateString/@labels, DateString@#], VTBTextStyle@DateString[#, OptionValue[DateTicksFormat]], ""] & /@ dts;
      BarChart[mts,
      ChartLabels -> {ticks, None},
@@ -36,7 +36,7 @@ Options[TimeSeriesBarChart] = Join[Options[BarChart],
 		mts, labels, ticks},
 		mts = TimeSeries[{dts, vals}\[Transpose]];
        (*constructing the labels*)
-		labels = DateRange[First@dts, Last@dts, OptionValue[DateLabelStep]];
+		labels = DateRange[DateList@First@dts, DateList@Last@dts, OptionValue[DateLabelStep]];
 		ticks = If[MemberQ[DateString/@labels, DateString@#], VTBTextStyle@DateString[#, OptionValue[DateTicksFormat]],""] & /@ dts;
 		
 		(*make the lines*)
