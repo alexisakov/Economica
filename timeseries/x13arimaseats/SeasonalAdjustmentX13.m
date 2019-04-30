@@ -135,6 +135,16 @@ SeasonalAdjustmentX13[x_,OptionsPattern[]]:=Module[
 				format = \"DATEVALUE\"
 				}"]) <>
 		"
+		pickmdl{
+    		mode = both
+     		file = \""<>Export[FileNameJoin[{$TemporaryDirectory,"pickmdl.mds" }],
+"(0, 1, 1)(0, 1, 1) *
+(0, 1, 2)(0, 1, 1) X
+(2, 1, 0)(0, 1, 1) X
+(0, 2, 2)(0, 1, 1) X
+(2, 1, 2)(0, 1, 1)", "Text"] <>"\"
+     		}
+
 		forecast{
 			maxlead = 6
 			maxback = 6}
@@ -143,7 +153,13 @@ SeasonalAdjustmentX13[x_,OptionsPattern[]]:=Module[
 			mode= " <> If[OptionValue[StockOrFlow]=="Flow","mult","mult"] <>"
 			final = (user)
 			print=none
-			save=("<>Quiet@Check[StringDeleteBraces@ToString[OptionValue[Output]],""]<>")}";
+			save=("<>Quiet@Check[StringDeleteBraces@ToString[OptionValue[Output]],""]<>")
+		}
+
+	
+
+
+			";
 		
 		inputfile =FileNameJoin[{$TemporaryDirectory,"mmax13"}];
 		Export[inputfile <> ".spc",outputText,"Text"];
