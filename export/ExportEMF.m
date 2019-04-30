@@ -4,7 +4,7 @@ Package["Economica`"]
 ExportEMF::usage="ExportEMF";
 ExportEPS::usage="ExportEPS";
 
-Options[ExportEMF] = Join[Options[Export],{BarChartQ->False, ImageResolution -> 4100}];
+Options[ExportEMF] = Join[Options[Export],{BarChartQ->"Inkscape", ImageResolution -> 4100}];
 Options[ExportEPS] = Options[Export];
 
 (*The Verbeia solution: http://mathematica.stackexchange.com/a/65551/128 The resulting charts are ugly though*)
@@ -18,7 +18,7 @@ InkscapeConvert[path_]:=Module[{
 	command
 	},
 		Run["\"" <> inkpath <> " -f=\""<>path<>".pdf\"" <> " --export-emf=\""<>path<>".emf\"\""]
-			(*DeleteFile[path <> ".pdf"]*)
+		(*DeleteFile[path <> ".pdf"]*)
 
 ]
 
@@ -39,8 +39,8 @@ With[{opt = First /@ Options[Export]},
       			Export[filename <> ".emf", picO, ImageResolution -> OptionValue[ImageResolution], Sequence @@ ((# -> OptionValue[#]) & /@ opt)],
 		    "Inkscape",
       			Export[filename <> ".pdf", expr];
-      			InkscapeConvert[filename]   			
-
+      			InkscapeConvert[filename];  			
+      			filename <> ".emf"
     ]
   ]
   ];
