@@ -7,12 +7,16 @@ Options[TimeSeriesTransform] = {Frequency -> 12};
 TimeSeriesYoY[ts_]:=100*(ts/TimeSeriesMonthShift[ts,12]-1);
 TimeSeriesMoM[ts_]:=100*(ts/TimeSeriesMonthShift[ts,1]-1);
 TimeSeriesQoQ[ts_]:=100*(ts/TimeSeriesMonthShift[ts,3]-1);
+TimeSeriesWoW[ts_]:=100*(TimeSeries[{Rest@ts["Dates"],(Rest@ts["Values"]/Most@ts["Values"]-1)}\[Transpose]]);
 
 
+TimeSeriesAccumulateProduct[ts_] := Module[
+  {},
+  TimeSeries[FoldList[Times, ts["Values"]], {ts["Dates"]}]
+  ]
 
-TimeSeriesIntegrate[ts_] := 
- TimeSeries[{ts["Dates"], 
-    Rest@FoldList[#1*(1 + #2/100) &, 1, ts["Values"]]}\[Transpose]];
+
+TimeSeriesIntegrate[ts_] := TimeSeries[{ts["Dates"],Rest@FoldList[#1*(1 + #2/100) &, 1, ts["Values"]]}\[Transpose]];
 
 
 
@@ -114,8 +118,9 @@ TimeSeriesBarChartCombine[ts1_, ts2_] := TimeSeriesThread[
 PackageExport["TimeSeriesYoY"]
 PackageExport["TimeSeriesMoM"]
 PackageExport["TimeSeriesQoQ"]
-PackageExport["TimeSeriesQoQ"]
+PackageExport["TimeSeriesWoW"]
 PackageExport["TimeSeriesIntegrate"]
+PackageExport["TimeSeriesAccumulateProduct"]
 PackageExport["TimeSeriesYoYIntegrate"]
 PackageExport["TimeSeriesYTDToLevel"]
 PackageExport["TimeSeriesTransform"]
