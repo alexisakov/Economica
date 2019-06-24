@@ -15,7 +15,6 @@ TimeSeriesAccumulateProduct[ts_] := Module[
   TimeSeries[FoldList[Times, ts["Values"]], {ts["Dates"]}]
   ]
 
-
 TimeSeriesIntegrate[ts_] := TimeSeries[{ts["Dates"],Rest@FoldList[#1*(1 + #2/100) &, 1, ts["Values"]]}\[Transpose]];
 
 
