@@ -14,6 +14,18 @@ The change in mathematica Importer
 Options[ImportCEIC]={SeriesInformation->True};
 
 
+
+ISOWeekDateToDate[s_String] := Module[{
+   dt = DateObject[{ToExpression@StringTake[s, 4], 1, 1}] + 
+     Quantity[2, "Days"] - 
+     Quantity[
+      DateValue[{ToExpression@StringTake[s, 4], 1, 3}, "ISOWeekDay"], 
+      "Days"] + Quantity[7*ToExpression@StringTake[s, -2], "Days"]
+   },
+  DateList[dt][[;; 3]]
+  ]
+
+
 ExcelDateToDateList[x_]:= (DatePlus[{1900, 1, 1}, x - 2]);
   
 ImportCEIC[XLFile_, SheetName_String, OptionsPattern[]] := Module[
@@ -41,7 +53,15 @@ ParseXlSheet[sheet_,OptionsPattern[]]:=Module[
 	offset=If[OptionValue[SeriesInformation]==True,12,2];
   	timesseries = sheet[[offset;;]];
   	dims = Dimensions@timesseries;
-  	timesseries[[All, 1]] = ExcelDateToDateList /@ timesseries[[All, 1]];
+  	
+  	(*This deals with dates: 
+  		if the date is properly imported as DateObject, then do nothing
+  		if date is imported as Excel number, then convert appropriately*)
+
+	If[ Head[timesseries[[1,1]]] === DateObject,
+		timesseries[[1,1]] = timesseries[[1,1]],
+		timesseries[[All, 1]] = ExcelDateToDateList /@ timesseries[[All, 1]]
+		];
   	timesseries = timesseries[[All, {1, #}]] & /@ Range[2, Last@dims];
   	timesseries = timesseries /. {_, "#N/A"} :> Sequence[];
   	timesseries = timesseries /. {_, $Failed} :> Sequence[];
@@ -54,8 +74,10 @@ ParseXlSheet[sheet_,OptionsPattern[]]:=Module[
 Options[ImportTimeSeries]=Options[ImportCEIC];
 
 With[{opt = First /@ Options[ImportCEIC]},
+ 	
  	ImportTimeSeries[XLFile_String, SheetName_String,OptionsPattern[]]:=(
 		Map[TimeSeries,ImportCEIC[XLFile,SheetName,Sequence @@ ((# -> OptionValue[#]) & /@ opt)]]);
+
 	ImportTimeSeries[XLFile_, SheetName_List,OptionsPattern[]]:=Module[
 		{op,impCEIC},
 		op=((#->OptionValue[#])&/@opt);
@@ -64,11 +86,12 @@ With[{opt = First /@ Options[ImportCEIC]},
 	];
 ];
 
-Options[ImportIRIS]=Join[Options[ImportCEIC],{Frequency->"Quarter"}]
+Options[ImportIRIS]=Join[Options[ImportCEIC],{Frequency->"Quarter",RowOffset->3}]
+
 ImportIRIS[XLFile_, OptionsPattern[]] := Module[
   {impt = Import[XLFile],
    timesseries, dims, offset, ts},
-  offset=If[OptionValue[SeriesInformation]==True,3,3];
+  offset=OptionValue[RowOffset];
   timesseries = impt[[offset;;]];
   dims = Dimensions@timesseries;
 
@@ -76,7 +99,9 @@ ImportIRIS[XLFile_, OptionsPattern[]] := Module[
     OptionValue[Frequency]=="Quarter",
       timesseries[[All, 1]] = DatePlus[DateList[{#, {"Year", "Q", "Quarter"}}], {2, "Month"}] & /@ timesseries[[All, 1]],
     OptionValue[Frequency]=="Month",
-      timesseries[[All, 1]] = DateList[{#, {"Year", "M", "Month"}}] & /@ timesseries[[All, 1]]
+      timesseries[[All, 1]] = DateList[{#, {"Year", "M", "Month"}}] & /@ timesseries[[All, 1]],
+    OptionValue[Frequency]=="Week",
+      timesseries[[All, 1]] = ISOWeekDateToDate[#] & /@ timesseries[[All, 1]]
     ]; 
 
   timesseries = timesseries[[All, {1, #}]] & /@ Range[2, Last@dims];
