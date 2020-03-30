@@ -67,7 +67,14 @@ LoadVTBCapitalTheme[]:= (
 		];
 	Themes`AddThemeRules["VTBCapital2018",Plot,   
 	    Axes -> True, 
-	    Frame -> False
+	    Frame -> False,
+	    Axes -> True, 
+		Frame -> False,
+		PlotStyle -> ({ColorDataVTBCapital2018[#],Thickness[0.008]}&/@Range[8]),
+		ImageSize -> {24, 18}/1.5 cm,
+		AspectRatio -> 3/4,
+		TicksStyle -> Directive[22/1.5, FontName -> "Arial" , Black, Opacity[0.3], FontOpacity -> 1],
+		FrameTicksStyle -> Directive[22/1.5, FontName -> "Arial" , Black]
 		]; 
  	Themes`AddThemeRules["VTBCapital2018",PieChart,
 		ChartLayout->"Stacked" 
@@ -89,7 +96,9 @@ PackageExport["LoadVTBCapitalTheme"]
 PackageExport["ColorDataVTBCapital2018"]
 
 Options[VTBTextStyle]={FontSize -> 22/1.5}
+Options[VTBTextStyleNoColor]={FontSize -> 22/1.5}
+
 VTBTextStyle[x_,OptionsPattern[]] := Style[x, FontFamily -> "Arial", FontSize -> OptionValue[FontSize], Black, LineSpacing -> {0.1, 10}]; 
-VTBTextStyleNoColor[x_] := Style[x, FontFamily -> "Arial", FontSize -> 22/1.5,  LineSpacing -> {0.1, 10}];
+VTBTextStyleNoColor[x_,OptionsPattern[]] := Style[x, FontFamily -> "Arial", FontSize -> OptionValue[FontSize],  LineSpacing -> {0.1, 10}];
 PackageExport["VTBTextStyle"]
 PackageExport["VTBTextStyleNoColor"]
