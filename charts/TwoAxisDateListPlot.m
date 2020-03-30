@@ -30,14 +30,20 @@ With[
    
    (*the chart itself*)
    DateListPlot[list1,
-    Epilog -> epilogData,
-    FrameTicks -> {Quiet[
-       {{da1, IntegerPart[#]& /@ da1}\[Transpose],
-        {da1, If[OptionValue[ReversedAxis],-1,1]*(IntegerPart[#]& /@ da2)}\[Transpose]}],
-      {True, None}}, 
-      Frame -> {True, True, False, True}, Axes -> False,
-      Prolog->OptionValue[Prolog]
-      ]
-   ]]
+   Epilog -> epilogData,
+      Prolog -> OptionValue[Prolog],
+      Frame -> {True, True, False, True},
+      Axes -> False,
+      FrameTicks -> {
+      		{
+      		{da1, Round[#,0.1] & /@ da1}\[Transpose], 
+      		{da1, If[OptionValue[ReversedAxis], -1, 1]*(Round[#,0.1] & /@ da2)}\[Transpose]},
+      		{Automatic, None}
+      	}
 
-PackageExport["TwoAxisDateListPlot"]   
+
+   ]
+   ]
+   ]
+
+PackageExport["TwoAxisDateListPlot"]

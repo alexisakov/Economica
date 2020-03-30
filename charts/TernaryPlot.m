@@ -34,13 +34,13 @@ TernaryPlot[dat_, regnum_, nLab_, nms_List, OptionsPattern[]] := Module[
 		(**The 'axis' of the chart**)
 		rl =  
 			Table[
-				{Dotted, RGBColor[i/255, 0, 0], Line[{{0 + i/255 Sqrt[3]/2 Tan[30 Degree],  i/255 Sqrt[3]/2}, {1 - i/255 Sqrt[3]/2 Tan[30 Degree], i/255 Sqrt[3]/2}}]},
+				{Dotted, RGBColor[i/255, 0, 0], Arrowheads[0.03],Arrow[{{0 + i/255 Sqrt[3]/2 Tan[30 Degree],  i/255 Sqrt[3]/2}, {1 - i/255 Sqrt[3]/2 Tan[30 Degree], i/255 Sqrt[3]/2}}]},
 				{i, 256*0.1, 256*0.9, 256*0.1}],
 		bl = (Table[
-				{Dotted, RGBColor[0, 0, i/255],Rotate[Line[{{0 + i/255 Sqrt[3]/2 Tan[30 Degree],i/255 Sqrt[3]/2}, {1 - i/255 Sqrt[3]/2 Tan[30 Degree],i/255 Sqrt[3]/2}}], 120 Degree, {0.5, Sqrt[3]/6}]},
+				{Dotted, RGBColor[0, 0, i/255], Arrowheads[0.03],Rotate[Arrow[{{0 + i/255 Sqrt[3]/2 Tan[30 Degree],i/255 Sqrt[3]/2}, {1 - i/255 Sqrt[3]/2 Tan[30 Degree],i/255 Sqrt[3]/2}}], 120 Degree, {0.5, Sqrt[3]/6}]},
 				{i, 256*0.1, 256*0.9, 256*0.1}]),
 		gl = Table[
-				{Dotted, RGBColor[0, i/255, 0],Rotate[Line[{{0 + i/255 Sqrt[3]/2 Tan[30 Degree],i/255 Sqrt[3]/2}, {1 - i/255 Sqrt[3]/2 Tan[30 Degree],i/255 Sqrt[3]/2}}], -120 Degree, {0.5, Sqrt[3]/6}]},
+				{Dotted, RGBColor[0, i/255, 0], Arrowheads[0.03],Rotate[Arrow[{{0 + i/255 Sqrt[3]/2 Tan[30 Degree],i/255 Sqrt[3]/2}, {1 - i/255 Sqrt[3]/2 Tan[30 Degree],i/255 Sqrt[3]/2}}], -120 Degree, {0.5, Sqrt[3]/6}]},
 				{i, 256*0.1, 256*0.9, 256*0.1}],
 		tg = Graphics[{
 			Text[Style[nms[[3]], Blue, FontFamily -> "Arial", FontSize -> 22/1.5, LineSpacing -> {0.1, 10}], {-0.02, -0.02}],     
